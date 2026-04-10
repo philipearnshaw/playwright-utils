@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
-    "baseUrl": ".", 
+    "ignoreDeprecations": "6.0",
+    "baseUrl": "./src",
     "paths": {
-      "components/*": ["components/*"],
       "pages/*": ["pages/*"],
       "common/*": ["common/*"],
       "data/*": ["data/*"],
       "fixtures/*": ["fixtures/*"],
-      "utils/*": ["utils/*"]
-    }
+      "utils/*": ["utils/*"],
+      "schemas/*": ["schemas/*"],
+      "constants/*": ["constants/*"]
+    },
+    "moduleResolution": "bundler",
+    "types": ["node", "playwright"]
   },
   "exclude": [
     "dist",
