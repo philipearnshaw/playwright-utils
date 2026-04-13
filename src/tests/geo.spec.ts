@@ -17,13 +17,14 @@ dtProductDiscoveryData.forEach(({ url, requiredSchemaTypes }) => {
     });
 
     // ------------------------------------------------------------------------
-    // Output page ld+json data to console
+    // Output page ld+json data to console for specific schema types
     // ------------------------------------------------------------------------
     test('should output LD+JSON specific elements', async ({ ldJsonPage }) => {
       const dataObjects = await ldJsonPage.getLdJsonData();
       expect(dataObjects.length, `No LD+JSON data objects found for ${url}`).toBeGreaterThan(0);
 
       dataObjects.forEach((obj) => {
+        // hardcoded for now
         if (obj['@type'] === 'VideoObject') {
           console.log(JSON.stringify(obj, null, 2), '\n\n---------\n');
         }
@@ -39,9 +40,9 @@ dtProductDiscoveryData.forEach(({ url, requiredSchemaTypes }) => {
 
       ldJsonPage.assertRequiredSchemasPresent(dataObjects, requiredSchemaTypes);
 
-      // dataObjects.forEach((obj) => {
-      //  console.log(JSON.stringify(obj, null, 2), '\n\n---------\n');
-      // });
+      dataObjects.forEach((obj) => {
+        console.log(JSON.stringify(obj, null, 2), '\n\n---------\n');
+      });
     });
 
     // ------------------------------------------------------------------------
