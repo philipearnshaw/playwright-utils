@@ -36,7 +36,7 @@ export class ScreenshotUtils {
     });
   }
 
-  private async addUrlBanner(): Promise<void> {
+  public async addUrlBanner(): Promise<void> {
     /**
      * Add URL banner to the top of the page before taking the screenshot
      */
