@@ -22,13 +22,14 @@ export class ScreenshotUtils {
     await this.takeScreenshot(options);
   }
 
-  public async takeScreenshot(options?: { fileName?: string; fullPage?: boolean }): Promise<void> {
+  public async takeScreenshot(options?: { fileName?: string; fullPage?: boolean; page?: Page }): Promise<void> {
     const fullPage = options?.fullPage ?? true;
     const fileName = options?.fileName ?? this.generateFileName(this.url);
+    const page = options?.page ?? this.page;
 
-    await this.page.waitForTimeout(1_000);
+    await page.waitForTimeout(1_000);
 
-    await this.page.screenshot({
+    await page.screenshot({
       path: `./${this.folderName}/${fileName}.jpg`,
       type: 'jpeg',
       quality: 80,
