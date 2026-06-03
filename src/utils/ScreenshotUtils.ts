@@ -17,7 +17,11 @@ export class ScreenshotUtils {
     await this.page.evaluate(() => window.scrollTo(0, 0));
   }
 
-  public async takeScreenshotWithUrlBanner(options?: { fileName?: string; fullPage?: boolean }): Promise<void> {
+  public async takeScreenshotWithUrlBanner(options?: {
+    fileName?: string;
+    fullPage?: boolean;
+    page?: Page;
+  }): Promise<void> {
     await this.addUrlBanner();
     await this.takeScreenshot(options);
   }
@@ -27,7 +31,7 @@ export class ScreenshotUtils {
     const fileName = options?.fileName ?? this.generateFileName(this.url);
     const page = options?.page ?? this.page;
 
-    await page.waitForTimeout(1_000);
+    await page.waitForTimeout(2_000);
 
     await page.screenshot({
       path: `./${this.folderName}/${fileName}.jpg`,
@@ -37,13 +41,14 @@ export class ScreenshotUtils {
     });
   }
 
-  public async addUrlBanner(): Promise<void> {
+  public async addUrlBanner(options?: { fileName?: string; fullPage?: boolean; page?: Page }): Promise<void> {
     /**
      * Add URL banner to the top of the page before taking the screenshot
      */
-    const currentUrl = this.page.url();
+    const page = options?.page ?? this.page;
+    const currentUrl = page.url();
 
-    await this.page.evaluate((url) => {
+    await page.evaluate((url) => {
       const banner = document.createElement('div');
       banner.id = '__playwright-url-banner__';
       banner.textContent = `URL: ${url}`;

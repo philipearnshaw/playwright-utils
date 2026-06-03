@@ -3,14 +3,15 @@ import { ScreenshotUtils } from '../utils/ScreenshotUtils';
 import { externalUrls } from '../constants/constants';
 
 // Example U01 URL: https://pam-introduce-a-friend-21137-u01.cf.dev-paas.bskyb.com
-// Example Stage URL: https://pam-introduce-a-friend-21137-n01.stage-cf.sky.com
+// Example Stage URL: https://pam-introduce-a-friend-21502-n01.stage-cf.sky.com
+// Example master URL: https://pam-introduce-a-friend-master-u01.cf.dev-paas.bskyb.com
 
 test.use({
-  baseURL: 'https://pam-introduce-a-friend-master-u01.cf.dev-paas.bskyb.com',
+  baseURL: 'https://pam-introduce-a-friend-21536-n01.stage-cf.sky.com',
   javaScriptEnabled: true,
 });
 
-const FOLDER_NAME = '__sentinel_137_screenshots__';
+const FOLDER_NAME = '__sentinel_182_screenshots__';
 
 /**
  * Home page test scenarios:

@@ -6,18 +6,19 @@ import { externalUrls } from 'constants/constants';
 // Example: https://pam-key-facts-master-u01.cf.dev-paas.bskyb.com/key-facts?token=sps-ext-tkn-39bd5214-4939-4a9b-abb0-495d3bbe6808
 
 test.use({
+  javaScriptEnabled: true,
   baseURL:
-    'https://pam-key-facts-master-u01.cf.dev-paas.bskyb.com/key-facts?token=sps-ext-tkn-fe59c665-5926-4ff2-802e-fe714661b946',
+    'https://pam-key-facts-21558-u01.cf.dev-paas.bskyb.com/key-facts?token=sps-ext-tkn-95fef8f7-255c-4f7c-b6ef-382e1b7bf5bc',
 });
 
 test.use({ javaScriptEnabled: true });
 
-const FOLDER_NAME = '__sentinel_188_screenshots__';
+const FOLDER_NAME = '__sentinel_181_screenshots__';
 
 test.beforeEach(async ({ page }) => {
-  await page.route(externalUrls.sky.cdnPrivacyMgmt, async (route) => {
-    return route.abort();
-  });
+  // Applies to *both* page and popup (newPage)
+  const context = page.context();
+  await context.route(externalUrls.sky.cdnPrivacyMgmt, (route) => route.abort());
 
   await page.screencast.start({ path: 'key-facts.webm', size: { width: 1280, height: 800 }, quality: 50 });
   await page.screencast.showActions({ position: 'top-right', fontSize: 10 });
@@ -36,28 +37,28 @@ test('key-facts screenshots', async ({ page, baseURL }) => {
 
   await screenshotUtils.navigateAndStabilisePage();
   await page.waitForTimeout(3_000);
-  await screenshotUtils.takeScreenshot({ fileName: 'home-page' });
+  await screenshotUtils.takeScreenshotWithUrlBanner({ fileName: 'home-page' });
   await readKeyFactsBtn.click();
 
   await page.waitForTimeout(2_000);
-  await screenshotUtils.takeScreenshot({ fileName: 'bill-page' });
+  await screenshotUtils.takeScreenshotWithUrlBanner({ fileName: 'bill-page' });
   await keyFactsContinueBtn.click();
 
   await page.waitForTimeout(2_000);
-  await screenshotUtils.takeScreenshot({ fileName: 'contract-page' });
+  await screenshotUtils.takeScreenshotWithUrlBanner({ fileName: 'contract-page' });
   await keyFactsContinueBtn.click();
 
   await page.waitForTimeout(2_000);
-  await screenshotUtils.takeScreenshot({ fileName: 'equipment-page' });
+  await screenshotUtils.takeScreenshotWithUrlBanner({ fileName: 'equipment-page' });
   await keyFactsContinueBtn.click();
 
   await page.waitForTimeout(2_000);
-  await screenshotUtils.takeScreenshot({ fileName: 'completion-page' });
+  await screenshotUtils.takeScreenshotWithUrlBanner({ fileName: 'completion-page' });
 
   // clicks the download my sky button and this opens a new page which we need to take a screenshot of
   const [newPage] = await Promise.all([page.waitForEvent('popup'), mySkyDownloadBtn.click()]);
-  await newPage.waitForTimeout(5_000);
+  await newPage.waitForTimeout(3_000);
 
   // Switches to new page that needs passing to screenshot utils
-  await screenshotUtils.takeScreenshot({ fileName: 'my-sky-app-page', page: newPage });
+  await screenshotUtils.takeScreenshotWithUrlBanner({ fileName: 'my-sky-app-page', page: newPage });
 });
