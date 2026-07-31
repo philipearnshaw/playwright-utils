@@ -8,12 +8,10 @@ import { externalUrls } from 'constants/constants';
 test.use({
   javaScriptEnabled: true,
   baseURL:
-    'https://pam-key-facts-21558-u01.cf.dev-paas.bskyb.com/key-facts?token=sps-ext-tkn-95fef8f7-255c-4f7c-b6ef-382e1b7bf5bc',
+    'https://pam-key-facts-22241-u01.cf.dev-paas.bskyb.com/key-facts?token=sps-ext-tkn-0e1a1cd8-174d-40db-af73-b0564d5c4f2e',
 });
 
-test.use({ javaScriptEnabled: true });
-
-const FOLDER_NAME = '__sentinel_181_screenshots__';
+const FOLDER_NAME = '__sentinel_245_screenshots__';
 
 test.beforeEach(async ({ page }) => {
   // Applies to *both* page and popup (newPage)
