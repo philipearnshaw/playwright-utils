@@ -7,11 +7,11 @@ import { externalUrls } from '../constants/constants';
 // Example master URL: https://pam-introduce-a-friend-master-u01.cf.dev-paas.bskyb.com
 
 test.use({
-  baseURL: 'https://pam-introduce-a-friend-21536-n01.stage-cf.sky.com',
+  baseURL: 'https://pam-introduce-a-friend-master-u01.cf.dev-paas.bskyb.com',
   javaScriptEnabled: true,
 });
 
-const FOLDER_NAME = '__sentinel_182_screenshots__';
+const FOLDER_NAME = '__sentinel_master_screenshots__';
 
 /**
  * Home page test scenarios:
@@ -21,7 +21,6 @@ const FOLDER_NAME = '__sentinel_182_screenshots__';
  * 4. Click on vouchers CTA and navigate to invite page
  */
 test.describe('PAM Introduce A Friend - Refer a Friend', () => {
-  let screenshotUtils: ScreenshotUtils;
   const path = 'refer-a-friend';
 
   test.beforeEach(async ({ page }) => {
@@ -29,17 +28,18 @@ test.describe('PAM Introduce A Friend - Refer a Friend', () => {
       return route.abort();
     });
 
-    screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await page.goto(path);
   });
 
-  test('screenshot of default', async () => {
+  test('screenshot of default', async ({ page }) => {
+    const screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await screenshotUtils.takeScreenshotWithUrlBanner({
       fileName: screenshotUtils.generateFileName(`${path}__default`),
     });
   });
 
   test('screenshot of default with open FAQ', async ({ page }) => {
+    const screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     const faqSection = page.getByTestId('raf-home-faqs-section');
     const accordionHeadings = await faqSection.getByTestId(/^raf-home-faqs-accordion-\d+-heading$/).all();
     for (const heading of accordionHeadings) {
@@ -54,6 +54,7 @@ test.describe('PAM Introduce A Friend - Refer a Friend', () => {
   });
 
   test('screenshot after hero CTA navigation', async ({ page }) => {
+    const screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await page.getByTestId('raf-home-hero-cta').click();
     await page.waitForURL(/invite/i);
     await screenshotUtils.takeScreenshotWithUrlBanner({
@@ -62,6 +63,7 @@ test.describe('PAM Introduce A Friend - Refer a Friend', () => {
   });
 
   test('screenshot after vouchers CTA navigation', async ({ page }) => {
+    const screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await page.getByTestId('raf-home-vouchers-cta').click();
     await page.waitForURL(/invite/i);
     await screenshotUtils.takeScreenshotWithUrlBanner({
@@ -76,7 +78,6 @@ test.describe('PAM Introduce A Friend - Refer a Friend', () => {
  * 2. Click on error CTA and navigate to home page
  */
 test.describe('PAM Introduce A Friend - Error', () => {
-  let screenshotUtils: ScreenshotUtils;
   const path = 'refer-a-friend/error';
 
   test.beforeEach(async ({ page }) => {
@@ -84,17 +85,18 @@ test.describe('PAM Introduce A Friend - Error', () => {
       return route.abort();
     });
 
-    screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await page.goto(path);
   });
 
-  test('screenshot of default', async () => {
+  test('screenshot of default', async ({ page }) => {
+    const screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await screenshotUtils.takeScreenshotWithUrlBanner({
       fileName: screenshotUtils.generateFileName(`${path}__default`),
     });
   });
 
   test('screenshot after error CTA navigation', async ({ page }) => {
+    const screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await page.getByTestId('raf-error-cta').click();
     await page.waitForURL('**/refer-a-friend/');
 
@@ -112,7 +114,6 @@ test.describe('PAM Introduce A Friend - Error', () => {
  * 2. Click on error CTA and navigate to home page
  */
 test.describe('PAM Introduce A Friend - Not Found', () => {
-  let screenshotUtils: ScreenshotUtils;
   const path = 'refer-a-friend/not-found';
 
   test.beforeEach(async ({ page }) => {
@@ -120,17 +121,18 @@ test.describe('PAM Introduce A Friend - Not Found', () => {
       return route.abort();
     });
 
-    screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await page.goto(path);
   });
 
-  test('screenshot of default', async () => {
+  test('screenshot of default', async ({ page }) => {
+    const screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await screenshotUtils.takeScreenshotWithUrlBanner({
       fileName: screenshotUtils.generateFileName(`${path}__default`),
     });
   });
 
   test('screenshot after not found CTA navigation', async ({ page }) => {
+    const screenshotUtils = new ScreenshotUtils(page, path, FOLDER_NAME);
     await page.getByTestId('raf-404-cta').click();
     await page.waitForURL('**/refer-a-friend/');
 

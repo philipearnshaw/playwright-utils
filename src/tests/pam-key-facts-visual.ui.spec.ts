@@ -1,4 +1,4 @@
-import { expect, Locator, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { ScreenshotUtils } from '../utils/ScreenshotUtils';
 import { externalUrls } from 'constants/constants';
 
@@ -22,8 +22,8 @@ test.beforeEach(async ({ page }) => {
 test('key-facts screenshots', async ({ page, baseURL }) => {
   const screenshotUtils = new ScreenshotUtils(page, baseURL as string, FOLDER_NAME);
 
-  const readKeyFactsBtn: Locator = page.locator('[data-test-id="read-key-facts-button"]');
-  const keyFactsContinueBtn: Locator = page.locator('[data-test-id="key-facts-continue-button"]');
+  const readKeyFactsBtn = page.getByTestId('read-key-facts-button');
+  const keyFactsContinueBtn = page.getByTestId('key-facts-continue-button');
 
   await screenshotUtils.navigateAndStabilisePage();
   await screenshotUtils.addUrlBanner();

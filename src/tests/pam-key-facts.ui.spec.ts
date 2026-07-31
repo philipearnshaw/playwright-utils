@@ -1,4 +1,4 @@
-import { Locator, test } from '@playwright/test';
+import { test } from '@playwright/test';
 import { ScreenshotUtils } from '../utils/ScreenshotUtils';
 import { externalUrls } from 'constants/constants';
 
@@ -29,9 +29,9 @@ test.afterEach(async ({ page }) => {
 test('key-facts screenshots', async ({ page, baseURL }) => {
   const screenshotUtils = new ScreenshotUtils(page, baseURL as string, FOLDER_NAME);
 
-  const readKeyFactsBtn: Locator = page.locator('[data-test-id="read-key-facts-button"]');
-  const keyFactsContinueBtn: Locator = page.locator('[data-test-id="key-facts-continue-button"]');
-  const mySkyDownloadBtn: Locator = page.getByRole('button', { name: /Download MySky/i });
+  const readKeyFactsBtn = page.getByTestId('read-key-facts-button');
+  const keyFactsContinueBtn = page.getByTestId('key-facts-continue-button');
+  const mySkyDownloadBtn = page.getByRole('button', { name: /Download MySky/i });
 
   await screenshotUtils.navigateAndStabilisePage();
   await page.waitForTimeout(3_000);
