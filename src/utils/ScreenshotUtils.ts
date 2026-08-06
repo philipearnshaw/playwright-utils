@@ -17,6 +17,11 @@ export class ScreenshotUtils {
     await this.page.evaluate(() => window.scrollTo(0, 0));
   }
 
+  public async stabilisePage(): Promise<void> {
+    await this.scrollToDownloadLazyImages();
+    await this.page.evaluate(() => window.scrollTo(0, 0));
+  }
+
   public async takeScreenshotWithUrlBanner(options?: {
     fileName?: string;
     fullPage?: boolean;

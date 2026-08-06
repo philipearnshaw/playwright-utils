@@ -1,8 +1,14 @@
 
-# Playwright
+# System
+.DS_Store
 node_modules/
+.yarn/*
+
+# Playwright
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+/test-results/
+/test-screenshots/
