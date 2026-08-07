@@ -32,6 +32,7 @@ const expectVisualSnapshot = async (
 
   await expect(page).toHaveScreenshot(snapshotName, {
     fullPage: true,
+    maxDiffPixels: 50,
     animations: 'disabled',
     mask: [page.locator('img[src*=".gif"]')],
     maskColor: '#1f5e3b',

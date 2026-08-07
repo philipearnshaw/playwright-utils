@@ -80,18 +80,30 @@ export class ScreenshotUtils {
   }
 
   private async scrollToDownloadLazyImages(): Promise<void> {
+    const viewport = this.page.viewportSize();
+    if (viewport) {
+      await this.page.mouse.move(viewport.width / 2, viewport.height / 2);
+    }
+
+    let previousHeight = 0;
+    let stableCount = 0;
+
     for (let i = 0; i < 200; i++) {
-      const reachedBottom = await this.page.evaluate(
-        () => window.scrollY + window.innerHeight >= document.body.scrollHeight
+      const { reachedBottom, currentHeight } = await this.page.evaluate(() => ({
+        reachedBottom: window.scrollY + window.innerHeight >= document.body.scrollHeight,
+        currentHeight: document.body.scrollHeight,
+      }));
+
+      await this.page.waitForFunction(() =>
+        Array.from(document.images).every((img) => img.complete && img.naturalWidth > 0)
       );
 
-      if (reachedBottom) {
-        await this.page.waitForTimeout(1_000);
-        break;
-      }
+      stableCount = currentHeight === previousHeight ? stableCount + 1 : 0;
+      previousHeight = currentHeight;
+
+      if (reachedBottom && stableCount >= 2) break;
 
       await this.page.mouse.wheel(0, 400);
-      await this.page.waitForTimeout(500);
     }
   }
 
