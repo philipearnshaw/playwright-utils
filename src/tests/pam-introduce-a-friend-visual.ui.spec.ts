@@ -34,12 +34,14 @@ const expectVisualSnapshot = async (
     fullPage: true,
     maxDiffPixels: 50,
     animations: 'disabled',
+    // GIFs are non-deterministic between runs; mask them out so they don't cause diffs.
     mask: [page.locator('img[src*=".gif"]')],
     maskColor: '#1f5e3b',
   });
 };
 
 test.beforeEach(async ({ page }) => {
+  // Block the privacy consent script so its overlay never appears in snapshots.
   await page.route(externalUrls.sky.cdnPrivacyMgmt, (route) => route.abort());
 });
 
@@ -62,6 +64,7 @@ test.describe('PAM Introduce A Friend - Refer a Friend', () => {
       await heading.click();
     }
 
+    // Clicking accordions can scroll the page; reset to top so the snapshot starts from the top.
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(1_000);
     await expectVisualSnapshot(page, screenshotUtils, 'refer-a-friend-open-faq.png');
