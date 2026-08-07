@@ -54,18 +54,26 @@ export class ScreenshotUtils {
     const currentUrl = page.url();
 
     await page.evaluate((url) => {
+      const existingBanner = document.getElementById('__playwright-url-banner__');
+      if (existingBanner) {
+        existingBanner.remove();
+      }
+
       const banner = document.createElement('div');
       banner.id = '__playwright-url-banner__';
       banner.textContent = `URL: ${url}`;
       banner.style.position = 'fixed';
       banner.style.top = '0';
       banner.style.left = '0';
-      banner.style.width = '100%';
-      banner.style.padding = '8px 12px';
-      banner.style.fontSize = '12px';
+      banner.style.padding = '2px 6px';
+      banner.style.fontSize = '8px';
+      banner.style.lineHeight = '1.2';
       banner.style.fontFamily = 'monospace';
-      banner.style.background = 'rgba(0, 0, 0, 0.30)';
-      banner.style.color = '#fff';
+      banner.style.background = 'rgba(255, 255, 255, 0.72)';
+      banner.style.color = '#1f2937';
+      banner.style.borderBottomRightRadius = '4px';
+      banner.style.maxWidth = '100vw';
+      banner.style.boxSizing = 'border-box';
       banner.style.zIndex = '999999';
       document.body.appendChild(banner);
     }, currentUrl);
