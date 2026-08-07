@@ -34,6 +34,7 @@ const expectVisualSnapshot = async (
     fullPage: true,
     animations: 'disabled',
     mask: [page.locator('img[src*=".gif"]')],
+    maskColor: '#1f5e3b',
   });
 };
 
