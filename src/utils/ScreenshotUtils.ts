@@ -13,13 +13,13 @@ export class ScreenshotUtils {
 
   public async navigateAndStabilisePage(): Promise<void> {
     await this.page.goto(this.url);
-    await this.scrollToDownloadLazyImages();
-    await this.page.evaluate(() => window.scrollTo(0, 0));
+    await this.stabilisePage();
   }
 
   public async stabilisePage(): Promise<void> {
     await this.scrollToDownloadLazyImages();
     await this.page.evaluate(() => window.scrollTo(0, 0));
+    await this.page.waitForTimeout(1_000);
   }
 
   public async takeScreenshotWithUrlBanner(options?: {
