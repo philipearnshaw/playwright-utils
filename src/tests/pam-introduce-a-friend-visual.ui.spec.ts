@@ -28,9 +28,7 @@ const expectVisualSnapshot = async (
   snapshotName: string
 ): Promise<void> => {
   await screenshotUtils.addUrlBanner({ page });
-
   await screenshotUtils.stabilisePage();
-  await page.waitForTimeout(1_000);
 
   await expect(page).toHaveScreenshot(snapshotName, {
     fullPage: true,
@@ -55,6 +53,8 @@ test.describe('PAM Introduce A Friend - Refer a Friend', () => {
     const screenshotUtils = await createScreenshotUtils(page, path);
     const faqSection = page.getByTestId('raf-home-faqs-section');
     const accordionHeadings = await faqSection.getByTestId(/^raf-home-faqs-accordion-\d+-heading$/).all();
+
+    expect(accordionHeadings.length, 'Expected at least one FAQ accordion heading').toBeGreaterThan(0);
 
     for (const heading of accordionHeadings) {
       await heading.click();
